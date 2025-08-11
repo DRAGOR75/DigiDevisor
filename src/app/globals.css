@@ -24,3 +24,43 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
+/* Global grid background */
+body::before {
+  --size: 45px;
+  --line: color-mix(in hsl, canvasText, transparent 70%);
+  content: '';
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background:
+    linear-gradient(
+      90deg,
+      var(--line) 1px,
+      transparent 1px var(--size)
+    ) 50% 50% / var(--size) var(--size),
+    linear-gradient(
+      var(--line) 1px,
+      transparent 1px var(--size)
+    ) 50% 50% / var(--size) var(--size);
+  mask: linear-gradient(-20deg, transparent 50%, white);
+  transform-style: flat;
+  pointer-events: none;
+  z-index: -1; /* Keeps it behind all content */
+}
+body {
+  font-family: 'Geist', 'SF Pro Text', 'SF Pro Icons', 'AOS Icons',
+  'Helvetica Neue', Helvetica, Arial, sans-serif, system-ui;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Geist', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+}
+
+
+
+
