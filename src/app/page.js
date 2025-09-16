@@ -18,7 +18,7 @@ export default async function Home() {
             <ClientReviews />
             <Footer />
 
-            {/* Add more homepage sections here later */}
+
         </>
     );
 }
