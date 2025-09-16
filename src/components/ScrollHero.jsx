@@ -242,7 +242,7 @@ export default function HeroScroll() {
     padding-left: 5rem;
   }
   section:last-of-type {
-    min-height: 100vh;
+    min-height: 10vh;
     display: flex;
     place-items: center;
     width: 100%;

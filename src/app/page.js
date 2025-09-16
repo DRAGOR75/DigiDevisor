@@ -1,16 +1,26 @@
 import HeroSection from "@/components/HeroSection";
-import AboutPage from "./about/page";
-import ScrollHero from "@/components/ScrollHero"; 
+import ScrollHero from "@/components/ScrollHero";
+import ProductShowcase from "@/components/ProductShow";
+import ClientReviews from "@/components/ClientReviews";
+import OurClients from "@/components/OurClients";
+import Footer from "@/components/Footer";
 
+export default async function Home() {
+    // Simulate loading delay for demonstration (e.g., fetching data)
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 second delay
 
-export default function Home() {
-  return (
-    <>
-      <HeroSection />
-      <ScrollHero/>
-      <AboutPage/>
-      {/* Add more homepage sections here later */}
-    </>
-  );
+    return (
+        <>
+            <HeroSection />
+            <ScrollHero />
+            <ProductShowcase />
+            <OurClients/>
+            <ClientReviews />
+            <Footer />
+
+            {/* Add more homepage sections here later */}
+        </>
+    );
 }
+
 

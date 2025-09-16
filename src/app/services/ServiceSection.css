@@ -1,0 +1,48 @@
+.services-container {
+    position: relative;
+    width: 100%;
+}
+
+.service-section {
+    padding: 100px 0;
+}
+
+.service-bg {
+    background: #1a1a2e;
+    will-change: background-color;
+}
+
+.service-image {
+    will-change: clip-path, transform;
+}
+
+.reveal-heading {
+    will-change: opacity, transform;
+}
+
+.service-content {
+    will-change: opacity, transform;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3282b8;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2d5aa0;
+}
