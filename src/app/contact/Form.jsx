@@ -29,9 +29,7 @@ const FloatingOrb = () => {
     return (<div ref={orbRef} className="fixed top-0 left-0 w-80 h-80 rounded-full pointer-events-none -z-10" style={{ background: "radial-gradient(circle at center, rgba(124, 200, 249, 0.4) 0%, rgba(162, 89, 255, 0.2) 80%)", filter: "blur(60px)", transform: "translate(-50%, -50%)", mixBlendMode: "soft-light" }} aria-hidden="true" />);
 };
 
-
-const faqs = [ { question: "What is the typical timeline for a project?", answer: "Project timelines vary based on complexity. A standard website may take 4-6 weeks, while a full digital marketing campaign setup can take 2-4 weeks. We'll provide a detailed timeline after our initial discovery call." }, { question: "How do you handle project communication?", answer: "We believe in transparent communication. You'll have a dedicated project lead and regular check-ins via your preferred method (email, call, or Slack). We also provide status reports to keep you updated." }, { question: "What are your payment terms?", answer: "We typically require a 50% upfront deposit to begin work, with the remaining 50% due upon project completion and your final approval. For ongoing services, we offer monthly retainer plans." } ];
-
+const faqs = [{ question: "What is the typical timeline for a project?", answer: "Project timelines vary based on complexity. A standard website may take 4-6 weeks, while a full digital marketing campaign setup can take 2-4 weeks. We'll provide a detailed timeline after our initial discovery call." }, { question: "How do you handle project communication?", answer: "We believe in transparent communication. You'll have a dedicated project lead and regular check-ins via your preferred method (email, call, or Slack). We also provide status reports to keep you updated." }, { question: "What are your payment terms?", answer: "We typically require a 50% upfront deposit to begin work, with the remaining 50% due upon project completion and your final approval. For ongoing services, we offer monthly retainer plans." }];
 
 const FormInput = ({ name, type = "text", placeholder, value, onChange, children }) => {
     const commonClasses = "w-full p-4 bg-white/5 border-2 border-white/10 rounded-lg text-white placeholder-white/40 outline-none transition-all duration-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30";
@@ -51,7 +49,6 @@ const FormInput = ({ name, type = "text", placeholder, value, onChange, children
     return <input type={type} name={name} required value={value} onChange={onChange} placeholder={placeholder} className={commonClasses} />;
 };
 
-
 const ContactPage = () => {
     const [formData, setFormData] = useState({ name: "", email: "", company: "", phone: "", service: "", message: "" });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,20 +56,39 @@ const ContactPage = () => {
     const [openFaq, setOpenFaq] = useState(null);
     const pageRef = useRef(null);
 
-    useEffect(() => {
-    }, []);
-
     const handleInputChange = (e) => { setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value })); };
+
+    // --- FIXED HANDLE SUBMIT FUNCTION ---
     const handleSubmit = async (e) => {
-        e.preventDefault(); setIsSubmitting(true); setSubmitStatus({ submitted: false, error: false, message: "" });
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus({ submitted: false, error: false, message: "" });
+
         try {
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // connect to the backend API
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
             setSubmitStatus({ submitted: true, error: false, message: "🎉 Message sent! We'll be in touch soon." });
             setFormData({ name: "", email: "", company: "", phone: "", service: "", message: "" });
-        } catch (error) { setSubmitStatus({ submitted: false, error: true, message: "⚠️ Something went wrong. Please try again." }); } finally {
-            setIsSubmitting(false); setTimeout(() => setSubmitStatus({ submitted: false, error: false, message: "" }), 5000);
+        } catch (error) {
+            console.error(error);
+            setSubmitStatus({ submitted: false, error: true, message: "⚠️ Something went wrong. Please try again." });
+        } finally {
+            setIsSubmitting(false);
+            setTimeout(() => setSubmitStatus({ submitted: false, error: false, message: "" }), 5000);
         }
     };
+    // ------------------------------------
 
     return (
         <div ref={pageRef} className="bg-[#0a0d13]">

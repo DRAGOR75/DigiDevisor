@@ -18,7 +18,7 @@ export async function POST(request) {
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: 'info@digidevisor.com', // The recipient's email
+            to: 'baibhavgorai79845@gmail.com', // The recipient's email
             subject: `New Contact Form Submission from ${name}`,
             html: `
                 <h2>Contact Form Submission</h2>
