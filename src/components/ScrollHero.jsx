@@ -13,7 +13,6 @@ const actions = [
 export default function HeroScroll() {
     useEffect(() => {
         // --- 1. TOGGLE GLOBAL CLASS ---
-        // This ensures the effects ONLY happen on this page
         document.body.classList.add('hero-mode');
 
         // --- GSAP SETUP ---
@@ -82,9 +81,7 @@ export default function HeroScroll() {
 
         // --- CLEANUP ---
         return () => {
-            // Remove the class when leaving the page so About Us is safe
             document.body.classList.remove('hero-mode');
-
             dimmerScrub.kill();
             scrollerScrub.kill();
             chromaEntry.scrollTrigger.kill();
@@ -94,29 +91,31 @@ export default function HeroScroll() {
 
     return (
         <>
-            <header>
-                <h1 className="fluid bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
-                    Why Choose<br />Us?
-                </h1>
-            </header>
-            <main>
-                <section className="content fluid" data-animate="true" data-sync-scrollbar="true">
-                    <h2 className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                        <span aria-hidden="true">We can&nbsp;</span>
-                        <span className="sr-only">We can ship things.</span>
-                    </h2>
-                    <ul aria-hidden="true" style={{ "--count": actions.length }}>
-                        {actions.map((word, i) => (
-                            <li key={word} style={{ "--i": i }}>{word}</li>
-                        ))}
-                    </ul>
-                </section>
-                <section>
-                    <h2 className="fluid"></h2>
-                </section>
-            </main>
+            {/* WRAPPER ADDED HERE TO ISOLATE LAYOUT */}
+            <div className="hero-wrapper">
+                <header>
+                    <h1 className="fluid bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+                        Why Choose<br />Us?
+                    </h1>
+                </header>
+                <main>
+                    <section className="content fluid" data-animate="true" data-sync-scrollbar="true">
+                        <h2 className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                            <span aria-hidden="true">We can&nbsp;</span>
+                            <span className="sr-only">We can ship things.</span>
+                        </h2>
+                        <ul aria-hidden="true" style={{ "--count": actions.length }}>
+                            {actions.map((word, i) => (
+                                <li key={word} style={{ "--i": i }}>{word}</li>
+                            ))}
+                        </ul>
+                    </section>
+                    <section>
+                        <h2 className="fluid"></h2>
+                    </section>
+                </main>
+            </div>
 
-            {/* KEEP GLOBAL, BUT SCOPE TO 'hero-mode' CLASS */}
             <style jsx global>{`
                 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
                 @import url('https://unpkg.com/normalize.css') layer(normalize);
@@ -137,10 +136,10 @@ export default function HeroScroll() {
                         color-scheme: light dark;
                     }
 
-                    /* 2. ONLY APPLY GRID WHEN 'hero-mode' IS ACTIVE */
+                    /* FIX: REMOVED display: grid and place-items: center 
+                       Kept background and fonts.
+                    */
                     body.hero-mode {
-                        display: grid;
-                        place-items: center;
                         background: #0a0d13;
                         min-height: 100dvh;
                         font-family: 'Geist', sans-serif;
@@ -148,23 +147,22 @@ export default function HeroScroll() {
                         overflow-x: hidden;
                     }
 
-                    /* 3. FIX THE FOOTER ON THIS PAGE */
-                    /* This forces the footer to span the whole width, ignoring the grid centering */
-                    body.hero-mode footer {
-                        grid-column: 1 / -1;
+                    /* FIX: ADDED WRAPPER STYLES HERE */
+                    .hero-wrapper {
+                        display: grid;
+                        place-items: center;
                         width: 100%;
-                        justify-self: stretch;
                     }
 
-                    /* 4. BACKGROUND FIX */
-                    /* Added position: fixed so it doesn't push the footer down */
+                    /* FIX: REMOVED FOOTER GRID HACK (Not needed if body isn't grid) */
+                    
                     body.hero-mode::before {
                         --size: 45px;
                         --line: rgba(255, 255, 255, 0.15);
                         content: '';
                         height: 100vh;
                         width: 100vw;
-                        position: fixed; /* FIXED: Stops it from pushing content */
+                        position: fixed; 
                         background: linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size),
                         linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size);
                         mask: linear-gradient(-20deg, transparent 50%, black);
@@ -188,9 +186,9 @@ export default function HeroScroll() {
                     }
                 }
 
-                /* SCOPED LAYERS TO .hero-mode */
                 @layer demo {
-                    body.hero-mode header {
+                    /* UPDATED SELECTOR TO USE WRAPPER */
+                    .hero-wrapper header {
                         min-height: 100dvh;
                         display: flex;
                         place-items: center;
@@ -198,7 +196,7 @@ export default function HeroScroll() {
                         padding-inline: 5rem;
                     }
 
-                    body.hero-mode h1 {
+                    .hero-wrapper h1 {
                         font-size: clamp(3rem, 9vw, 10rem);
                         --font-level: 8;
                         line-height: 0.8;
@@ -206,19 +204,20 @@ export default function HeroScroll() {
                     }
 
                     @media (max-width: 768px) {
-                        body.hero-mode header {
+                        .hero-wrapper header {
                             padding-inline: 1rem;
                             justify-content: center;
                             text-align: center;
                         }
-                        body.hero-mode h1 {
+                        .hero-wrapper h1 {
                             font-size: clamp(3rem, 15vw, 7rem);
                         }
                     }
                 }
 
                 @layer stick {
-                    body.hero-mode section:first-of-type {
+                    /* UPDATED SELECTORS TO USE WRAPPER */
+                    .hero-wrapper section:first-of-type {
                         --font-level: 6;
                         display: flex;
                         line-height: 1.25;
@@ -227,7 +226,7 @@ export default function HeroScroll() {
                         align-items: flex-start;
                     }
 
-                    body.hero-mode section:last-of-type {
+                    .hero-wrapper section:last-of-type {
                         min-height: 10vh;
                         display: flex;
                         place-items: center;
@@ -235,7 +234,7 @@ export default function HeroScroll() {
                         justify-content: center;
                     }
 
-                    body.hero-mode section:first-of-type h2 {
+                    .hero-wrapper section:first-of-type h2 {
                         position: sticky;
                         top: calc(50% - 0.5lh);
                         font-size: inherit;
@@ -246,7 +245,7 @@ export default function HeroScroll() {
                         white-space: nowrap;
                     }
 
-                    body.hero-mode ul {
+                    .hero-wrapper ul {
                         font-weight: 600;
                         padding-inline: 0;
                         margin: 0;
@@ -254,25 +253,25 @@ export default function HeroScroll() {
                         padding-left: 1rem;
                     }
 
-                    body.hero-mode h2, body.hero-mode li:last-of-type {
+                    .hero-wrapper h2, .hero-wrapper li:last-of-type {
                         background: linear-gradient(to right, white, #AAA);
                         background-clip: text;
                         color: transparent;
                     }
 
                     @media (max-width: 768px) {
-                        body.hero-mode section:first-of-type {
+                        .hero-wrapper section:first-of-type {
                             padding-inline: 0.5rem;
                             --font-level: 8;
                             justify-content: center;
                             gap: 0.2ch;
                         }
 
-                        body.hero-mode section:first-of-type h2 {
+                        .hero-wrapper section:first-of-type h2 {
                             flex-shrink: 0;
                         }
 
-                        body.hero-mode ul {
+                        .hero-wrapper ul {
                             padding-left: 0;
                             text-align: left;
                             flex-grow: 0;
@@ -288,11 +287,11 @@ export default function HeroScroll() {
                         --base-chroma: 0.3;
                     }
 
-                    body.hero-mode ul {
+                    .hero-wrapper ul {
                         --step: calc((var(--end) - var(--start)) / (var(--count) - 1));
                     }
 
-                    body.hero-mode li:not(:last-of-type) {
+                    .hero-wrapper li:not(:last-of-type) {
                         color: oklch(
                                 var(--lightness) var(--base-chroma)
                                 calc(var(--start) + (var(--step) * var(--i)))

@@ -8,16 +8,22 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata = {
     title: 'Digi Devisor',
     description: 'Digital Solutions Partner',
-    // Next.js automatically adds the viewport tag for mobile, so you don't need to add it manually here.
+};
+
+// --- FIX: Explicitly define the viewport ---
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false, // Prevents pinch-to-zoom for a native app feel
+    themeColor: '#0a0d13', // Matches your background
 };
 
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-        <body className={`${inter.className} bg-[#0a0d13] overflow-x-hidden antialiased`}>
-        {/* 1. overflow-x-hidden: Prevents side-scrolling if animations go off-screen.
-                   2. antialiased: Makes fonts look sharper on screens.
-                */}
+        {/* Added suppressHydrationWarning in case extensions mess with the DOM */}
+        <body className={`${inter.className} bg-[#0a0d13] overflow-x-hidden antialiased`} suppressHydrationWarning>
 
         <NavBar />
 

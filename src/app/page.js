@@ -1,26 +1,15 @@
-import HeroSection from "@/components/HeroSection";
-import ScrollHero from "@/components/ScrollHero";
-import ProductShowcase from "@/components/ProductShow";
-import ClientReviews from "@/components/ClientReviews";
-import OurClients from "@/components/OurClients";
-import Footer from "@/components/Footer";
+
+import HomeSwitcher from "@/app/home/HomeSwitcher";
 
 export default async function Home() {
-    // Simulate loading delay for demonstration (e.g., fetching data)
+    // You can keep the loading delay here, or move it inside the components
     await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 second delay
 
     return (
-        <>
-            <HeroSection />
-            <ScrollHero />
-            <ProductShowcase />
-            <OurClients/>
-            <ClientReviews />
-            <Footer />
-
-
-        </>
+        <main>
+            {/* HomeSwitcher replaces all other content */}
+            <HomeSwitcher />
+        </main>
     );
 }
-
 
