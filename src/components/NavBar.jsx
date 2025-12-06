@@ -10,7 +10,6 @@ const navItems = [
     { id: "home", name: "Home", path: "/" },
     { id: "services", name: "Services", path: "/services" },
     { id: "about", name: "About", path: "/about" },
-    { id: "contact", name: "Contact", path: "/contact" },
 ];
 
 export default function NavBar() {
@@ -18,7 +17,6 @@ export default function NavBar() {
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
 
-    // Handle scroll effect
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20);
@@ -28,40 +26,49 @@ export default function NavBar() {
     }, []);
 
     return (
-        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto max-w-5xl">
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-full max-w-6xl px-4 md:px-0">
             <motion.div
                 layout
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 className={`
                     relative flex items-center justify-between px-6 py-3 
                     rounded-full border backdrop-blur-xl transition-all duration-300
                     ${
                     scrolled || isOpen
-                        ? "bg-[#0a0d13]/80 border-white/10 shadow-lg shadow-purple-900/10" // Dark Glass with slight purple shadow
-                        : "bg-[#0a0d13]/50 border-white/5" // Transparent default
+                        ? "bg-[#0a0d13]/80 border-white/10 shadow-[0_0_25px_rgba(147,51,234,0.2)]"
+                        : "bg-[#0a0d13]/60 border-white/5"
                 }
                 `}
-                style={{
-                    borderRadius: isOpen ? "1.5rem" : "9999px",
-                }}
             >
-                {/* --- DESKTOP MENU --- */}
-                <ul className="hidden md:flex gap-2 items-center text-sm font-medium text-white">
+                {/* --- 1. LOGO --- */}
+                <div className="flex items-center">
+                    <Link href="/" className="group">
+                        <span className="font-bold tracking-wider text-lg text-white">
+                            DIGI <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">DEVISOR</span>
+                        </span>
+                    </Link>
+                </div>
+
+                {/* --- 2. CENTER NAVIGATION --- */}
+                <ul className="hidden md:flex gap-1 items-center p-1 rounded-full bg-white/5 border border-white/5">
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
                             <li key={item.id} className="relative">
                                 <Link
                                     href={item.path}
-                                    className={`relative z-10 px-4 py-2 transition-colors duration-300 ${
+                                    className={`relative z-10 px-6 py-2 text-sm font-medium transition-all duration-300 rounded-full flex items-center gap-2 ${
                                         isActive ? "text-white" : "text-gray-400 hover:text-white"
                                     }`}
                                 >
+                                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />}
                                     {item.name}
                                     {isActive && (
                                         <motion.div
-                                            layoutId="desktop-indicator"
-                                            className="absolute inset-0 bg-white/10 rounded-full -z-0 border border-white/5"
+                                            layoutId="desktop-nav-bg"
+                                            className="absolute inset-0 bg-white/10 rounded-full -z-0 border border-white/5 shadow-inner"
                                             transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                         />
                                     )}
@@ -71,17 +78,29 @@ export default function NavBar() {
                     })}
                 </ul>
 
-                {/* --- MOBILE HEADER --- */}
-                <div className="flex md:hidden items-center justify-between w-full">
-                    {/* Logo - Matches your MobileHero gradient style */}
-                    <Link href="/" className="font-bold tracking-wider text-lg">
-                        DIGI <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">DEVISOR</span>
-                    </Link>
+                {/* --- 3. CTA BUTTON (REDESIGNED - Glass Glow) --- */}
+                <div className="hidden md:block">
+                    <Link
+                        href="/contact"
+                        // CHANGED:
+                        // - bg-white -> bg-white/5 (Dark semi-transparent)
+                        // - text-black -> text-white
+                        // - Added border-white/20
+                        // - Changed shadow to a cyan glow that increases on hover
+                        className="group relative px-8 py-2.5 rounded-full bg-white/5 border border-white/20 text-white font-bold text-sm flex items-center overflow-hidden transition-all duration-300 shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] hover:border-cyan-400/50 hover:bg-white/10"
+                    >
+                        <span className="relative z-10 tracking-wide">Let's Talk</span>
 
+                        {/* Shimmer Effect (Made subtly cyan) */}
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent skew-x-12" />
+                    </Link>
+                </div>
+
+                {/* --- MOBILE TOGGLE --- */}
+                <div className="flex md:hidden">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="p-2 text-white bg-white/5 rounded-full border border-white/10 hover:bg-white/10 transition-colors"
-                        aria-label="Toggle menu"
                     >
                         {isOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
@@ -99,7 +118,7 @@ export default function NavBar() {
                         className="md:hidden absolute top-full left-0 w-full mt-3 p-2 bg-[#0a0d13]/95 backdrop-blur-3xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl z-50"
                     >
                         <ul className="flex flex-col gap-2">
-                            {navItems.map((item) => {
+                            {[...navItems, { id: "contact", name: "Contact", path: "/contact" }].map((item) => {
                                 const isActive = pathname === item.path;
                                 return (
                                     <li key={item.id}>
@@ -116,7 +135,6 @@ export default function NavBar() {
                                             `}
                                         >
                                             {item.name}
-                                            {/* Small indicator dot for active page */}
                                             {isActive && (
                                                 <span className="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]"></span>
                                             )}

@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useEffect } from "react";
-import Image from "next/image"; // For optimized images
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from 'next/link';
@@ -14,22 +14,23 @@ const SleekClientsPage = () => {
     const statsRef = useRef(null);
 
     const clientLogos = [
-        { name: "Client 1", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738596/WhatsApp_Image_2025-08-28_at_2.34.27_PM_lpadum.jpg" },
-        { name: "Client 2", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738596/WhatsApp_Image_2025-08-28_at_2.28.57_PM_m0btwd.jpg" },
-        { name: "Client 3", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738596/WhatsApp_Image_2025-08-28_at_3.35.32_PM_d9zwqc.jpg" },
-        { name: "Client 4", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738595/WhatsApp_Image_2025-08-28_at_11.24.23_AM_mxivnu.jpg" },
+        { name: "Client 1", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035037/kutum_1_q28ghi.png" },
+        { name: "Client 2", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035037/D2_Solutions_qrw3nu.png" },
+        { name: "Client 3", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035037/Flipon_Digital_m5gj1s.png" },
+        { name: "Client 4", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035038/Garden_Villa_z5wdrn.png" },
         { name: "TSAF", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738594/TSAF_Logo_brddst.png" },
-        { name: "Client 6", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738595/WhatsApp_Image_2025-08-28_at_2.27.08_PM_fjt95z.jpg" },
-        { name: "Client 7", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738595/WhatsApp_Image_2025-06-28_at_7.54.43_PM_lhb2kn.jpg" },
-        { name: "Client 8", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738595/WhatsApp_Image_2025-06-25_at_4.04.46_PM_yh0hwc.jpg" },
-        { name: "Client 9", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738594/WhatsApp_Image_2024-08-31_at_9.48.09_PM_limhhn.jpg" },
-        { name: "Client 10", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738594/WhatsApp_Image_2025-06-07_at_9.28.11_PM_ulc1lg.jpg" },
-        { name: "Tata Archery", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738594/taa_logo-01_m6l3af.png" },
+        { name: "Client 6", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035036/sharan_orcxhg.png" },
+        { name: "Client 7", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035035/tsaf_climbing_zyt4rv.png" },
+        { name: "Client 8", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035037/taa_2_knoagr.png" },
+        { name: "Client 9", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035035/riverside_xbziu9.png" },
+        { name: "Client 10", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035037/Ramsy_1_xy7jr2.png" },
+        { name: "Tata Archery", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765036240/WhatsApp_Image_2025-08-28_at_11.24.23_AM_mxivnu-removebg-preview_dcuhiv.png" },
         { name: "Client 12", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738593/vvvv-removebg-preview_jxpwld.png" },
-        { name: "Client 13", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738593/PDF_page-0001_fxxole.jpg" },
-        { name: "Client 14", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738593/FB_IMG_1756371747330_ufuiap.jpg" },
+        { name: "Client 13", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035036/baba_furniture_1_hbpk4u.png" },
+        { name: "Client 14", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035035/Sri_Ram_Furniture_dy2k2f.png" },
         { name: "City Marbles", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738592/City_marbles_lham65.png" },
-    ];;
+        { name: "Client 16", src: "https://res.cloudinary.com/dsvso9xjc/image/upload/v1765035036/taxi-01_wntj1p.png" },
+    ];
 
     const stats = [
         { number: "50+", label: "Happy Clients" },
@@ -47,10 +48,11 @@ const SleekClientsPage = () => {
 
             if (logoRowRef.current) {
                 const track = logoRowRef.current.querySelector(".logo-track");
+                // Speeds up the marquee slightly for better energy
                 const trackWidth = track.scrollWidth / 2;
                 gsap.to(track, {
                     x: -trackWidth,
-                    duration: 40,
+                    duration: 35,
                     ease: "none",
                     repeat: -1,
                 });
@@ -86,9 +88,10 @@ const SleekClientsPage = () => {
             </div>
 
             <div className="relative z-10 container mx-auto px-6 py-20 md:py-28">
-                <div ref={titleRef} className="text-center mb-16 md:mb-20">
-                    <h1 className="text-3xl md:text-4xl font-bold mb-3 tracking-tight">
+                <div ref={titleRef} className="text-center mb-16 md:mb-24">
+                    <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight">
                         <span className="text-gray-200">Trusted by </span>
+                        <br className="md:hidden" />
                         <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                             Industry Leaders
                         </span>
@@ -96,15 +99,20 @@ const SleekClientsPage = () => {
                 </div>
 
                 <div ref={logoRowRef} className="relative w-full overflow-hidden mb-20 md:mb-24 [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-                    <div className="logo-track flex w-max items-center">
+                    <div className="logo-track flex w-max items-center py-4">
                         {[...clientLogos, ...clientLogos].map((logo, idx) => (
-                            <div key={idx} className="flex-shrink-0 w-36 h-36 md:w-40 md:h-40 mx-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 p-2">
+                            // CHANGED:
+                            // 1. Increased size: md:w-56 md:h-56 (was 48)
+                            // 2. Reduced padding: p-4 (was p-6) - makes logo bigger inside
+                            // 3. Added subtle border and stronger glow shadow for definition
+                            // 4. Increased hover scale for more impact
+                            <div key={idx} className="flex-shrink-0 w-40 h-40 md:w-56 md:h-56 mx-6 md:mx-10 flex items-center justify-center rounded-full bg-white border-2 border-white/50 p-4 shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform duration-300 hover:scale-110 relative z-10">
                                 <Image
                                     src={logo.src}
                                     alt={logo.name}
-                                    width={120}
-                                    height={120}
-                                    className="object-contain w-full h-full"
+                                    width={160}
+                                    height={160}
+                                    className="object-contain w-full h-full drop-shadow-sm"
                                 />
                             </div>
                         ))}

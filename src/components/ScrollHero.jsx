@@ -93,12 +93,12 @@ export default function HeroScroll() {
         <>
             {/* WRAPPER ADDED HERE TO ISOLATE LAYOUT */}
             <div className="hero-wrapper">
-                <header>
+                <header className="hero-header">
                     <h1 className="fluid bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
                         Why Choose<br />Us?
                     </h1>
                 </header>
-                <main>
+                <main className="hero-main">
                     <section className="content fluid" data-animate="true" data-sync-scrollbar="true">
                         <h2 className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
                             <span aria-hidden="true">We can&nbsp;</span>
@@ -110,7 +110,7 @@ export default function HeroScroll() {
                             ))}
                         </ul>
                     </section>
-                    <section>
+                    <section className="hero-spacer">
                         <h2 className="fluid"></h2>
                     </section>
                 </main>
@@ -118,51 +118,42 @@ export default function HeroScroll() {
 
             <style jsx global>{`
                 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
-                @import url('https://unpkg.com/normalize.css') layer(normalize);
+                /* FIX: Removed normalize.css import as it resets global styles and conflicts with Tailwind */
 
                 @layer normalize, base, demo, stick, effect, scrollbar, debug;
 
                 @layer base {
-                    :root {
+                    /* FIX: Moved variables from :root to .hero-wrapper to stop global leaks */
+                    .hero-wrapper {
                         --font-size-min: 14;
                         --font-size-max: 20;
                         --font-ratio-min: 1.1;
                         --font-ratio-max: 1.33;
                         --font-width-min: 375;
                         --font-width-max: 1500;
-                    }
 
-                    html {
-                        color-scheme: light dark;
-                    }
-
-                    /* FIX: REMOVED display: grid and place-items: center 
-                       Kept background and fonts.
-                    */
-                    body.hero-mode {
-                        background: #0a0d13;
-                        min-height: 100dvh;
-                        font-family: 'Geist', sans-serif;
-                        margin: 0;
-                        overflow-x: hidden;
-                    }
-
-                    /* FIX: ADDED WRAPPER STYLES HERE */
-                    .hero-wrapper {
+                        /* Layout basics specifically for this section */
                         display: grid;
                         place-items: center;
+                        font-family: 'Geist', sans-serif;
                         width: 100%;
                     }
 
-                    /* FIX: REMOVED FOOTER GRID HACK (Not needed if body isn't grid) */
-                    
+                    /* Only apply background color to the body when mode is active */
+                    body.hero-mode {
+                        background: #0a0d13;
+                        min-height: 100dvh;
+                        overflow-x: hidden;
+                    }
+
+                    /* Background grid effect */
                     body.hero-mode::before {
                         --size: 45px;
                         --line: rgba(255, 255, 255, 0.15);
                         content: '';
                         height: 100vh;
                         width: 100vw;
-                        position: fixed; 
+                        position: fixed;
                         background: linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size),
                         linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size);
                         mask: linear-gradient(-20deg, transparent 50%, black);
@@ -173,7 +164,8 @@ export default function HeroScroll() {
                         z-index: -1;
                     }
 
-                    :where(.fluid) {
+                    /* FIX: Scoped the .fluid class so it ONLY works inside hero-wrapper */
+                    .hero-wrapper .fluid {
                         --fluid-min: calc(var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0)));
                         --fluid-max: calc(var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0)));
                         --fluid-preferred: calc((var(--fluid-max) - var(--fluid-min)) / (var(--font-width-max) - var(--font-width-min)));
@@ -187,7 +179,6 @@ export default function HeroScroll() {
                 }
 
                 @layer demo {
-                    /* UPDATED SELECTOR TO USE WRAPPER */
                     .hero-wrapper header {
                         min-height: 100dvh;
                         display: flex;
@@ -216,7 +207,6 @@ export default function HeroScroll() {
                 }
 
                 @layer stick {
-                    /* UPDATED SELECTORS TO USE WRAPPER */
                     .hero-wrapper section:first-of-type {
                         --font-level: 6;
                         display: flex;

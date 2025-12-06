@@ -3,7 +3,10 @@ import MobileHero from "@/components/mobile/MobileHero";
 import MobileProductShow from "@/components/mobile/MobileProductShow";
 import MobileClients from "@/components/mobile/MobileClients";
 import MobileReviews from "@/components/mobile/MobileReviews";
-import Footer from "@/components/Footer"; // Reusing Footer is usually fine
+import Footer from "@/components/Footer";
+import ScrollHero from "@/components/ScrollHero";
+import MobileHeroScroll from "@/components/mobile/MobileHeroScroll";
+// Reusing Footer is usually fine
 
 export default function MobileHome() {
     return (
@@ -13,6 +16,7 @@ export default function MobileHome() {
 
             <div className="relative z-10 flex flex-col gap-12 pb-20">
                 <MobileHero />
+                <MobileHeroScroll/>
                 <MobileProductShow />
                 <MobileClients />
                 <MobileReviews />
