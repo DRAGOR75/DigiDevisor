@@ -29,7 +29,7 @@ const Footer = () => {
 
                     <div className="lg:max-w-sm">
                         <a href="/" className="inline-block text-2xl font-bold text-white tracking-wider">
-                            DigiDevisor
+                            Digi Devisor
                         </a>
                         <p className="mt-4 text-base">
                             A creative digital agency crafting bespoke web experiences and driving growth with data-driven marketing strategies.

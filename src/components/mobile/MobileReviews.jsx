@@ -72,14 +72,14 @@ export default function MobileReviews() {
                 </div>
             </div>
 
-            {/* Swipeable Carousel */}
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-6 pb-8 no-scrollbar">
+            {/* Vertical Stack Container */}
+            <div className="flex flex-col gap-6 px-6 pb-8">
                 {testimonials.map((t, i) => (
                     <div
                         key={i}
-                        className="snap-center min-w-[85%] flex-shrink-0"
+                        className="w-full"
                     >
-                        <div className="h-full bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm relative flex flex-col justify-between">
+                        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm relative flex flex-col justify-between shadow-lg">
                             {/* Quote Icon */}
                             <MessageSquare className="absolute -top-3 -left-2 w-8 h-8 text-blue-500/20 fill-blue-500/20" />
 
@@ -114,12 +114,6 @@ export default function MobileReviews() {
                 ))}
             </div>
 
-            {/* Simple Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-2">
-                <div className="w-12 h-1 rounded-full bg-blue-500"></div>
-                <div className="w-2 h-1 rounded-full bg-white/20"></div>
-                <div className="w-2 h-1 rounded-full bg-white/20"></div>
-            </div>
         </section>
     );
 }

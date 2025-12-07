@@ -52,7 +52,7 @@ export default function MobileHero() {
                         <div className="absolute inset-0 rounded-full border border-white/10 animate-ping opacity-20"></div>
 
                         {/* The Logo Image */}
-                        <div className="relative w-14 h-14">
+                        <div className="relative w-30 h-16">
                             <Image
                                 src="https://res.cloudinary.com/dsvso9xjc/image/upload/v1756738593/logo-01_1_tpgsvl.png"
                                 alt="DigiDevisor Logo"

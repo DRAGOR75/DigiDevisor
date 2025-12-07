@@ -19,7 +19,7 @@ export default function MobileHome() {
                 <MobileHeroScroll/>
                 <MobileProductShow />
                 <MobileClients />
-                <MobileReviews />
+                <MobileReviews/>
                 <Footer />
             </div>
         </div>

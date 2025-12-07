@@ -103,7 +103,7 @@ const ContactPage = () => {
                                 <div className="space-y-6 mb-8">
                                     <div className="flex items-start space-x-4"><Mail className="w-5 h-5 mt-1 text-yellow-300 flex-shrink-0" /><a href="mailto:info@digidevisor.com" className="text-white/80 hover:text-white transition-colors">info@digidevisor.com</a></div>
                                     <div className="flex items-start space-x-4"><Smartphone className="w-5 h-5 mt-1 text-blue-300 flex-shrink-0" /><a href="tel:+917870791893" className="text-white/80 hover:text-white transition-colors">+91 7870791893</a></div>
-                                    <div className="flex items-start space-x-4"><MapPin className="w-5 h-5 mt-1 text-purple-300 flex-shrink-0" /><span className="text-white/60">Jamshedpur, Jharkhand, India</span></div>
+                                    <div className="flex items-start space-x-4"><MapPin className="w-5 h-5 mt-1 text-purple-300 flex-shrink-0" /><span className="text-white/60">1st Floor, SAI Regency, Near KIA Showroom, Dimna Road, Mango, Jamshedpur 831018, India</span></div>
                                 </div>
                                 <div className="pt-8 border-t border-white/10">
                                     <h3 className="text-xl font-semibold text-white mb-4">Office Hours (IST)</h3>
