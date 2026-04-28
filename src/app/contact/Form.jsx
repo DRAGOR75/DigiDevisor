@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
-import { Mail, Smartphone, MapPin, Linkedin, Instagram, Facebook, ChevronDown } from "lucide-react";
+import { Mail, Smartphone, MapPin, Linkedin, Instagram, Facebook, ChevronDown, CheckCircle, AlertCircle } from "lucide-react";
 
 // --- Floating Orb Component ---
 const FloatingOrb = () => {
@@ -78,11 +78,11 @@ const ContactPage = () => {
                 throw new Error('Failed to send message');
             }
 
-            setSubmitStatus({ submitted: true, error: false, message: "🎉 Message sent! We'll be in touch soon." });
+            setSubmitStatus({ submitted: true, error: false, message: "Message sent! We'll be in touch soon." });
             setFormData({ name: "", email: "", company: "", phone: "", service: "", message: "" });
         } catch (error) {
             console.error(error);
-            setSubmitStatus({ submitted: false, error: true, message: "⚠️ Something went wrong. Please try again." });
+            setSubmitStatus({ submitted: false, error: true, message: "Something went wrong. Please try again." });
         } finally {
             setIsSubmitting(false);
             setTimeout(() => setSubmitStatus({ submitted: false, error: false, message: "" }), 5000);
@@ -118,7 +118,10 @@ const ContactPage = () => {
                             </div>
                         </div>
                         <div className="lg:col-span-3 bg-white/10 rounded-2xl shadow-xl backdrop-blur-md border border-white/10 p-8 md:p-10">
-                            {submitStatus.submitted || submitStatus.error ? (<div className={`p-10 rounded-2xl text-center text-white font-bold text-xl shadow-lg transition-all duration-500 ${submitStatus.error ? 'bg-gradient-to-r from-red-500 to-orange-500' : 'bg-gradient-to-r from-green-400 to-emerald-400'}`}>{submitStatus.message}</div>) : (<form className="w-full space-y-6" onSubmit={handleSubmit}>
+                            {submitStatus.submitted || submitStatus.error ? (<div className={`p-10 rounded-2xl flex flex-col items-center justify-center text-center text-white font-bold text-xl shadow-lg transition-all duration-500 ${submitStatus.error ? 'bg-gradient-to-r from-red-500 to-orange-500' : 'bg-gradient-to-r from-green-400 to-emerald-400'}`}>
+                                {submitStatus.error ? <AlertCircle className="w-16 h-16 mb-4 text-white" /> : <CheckCircle className="w-16 h-16 mb-4 text-white" />}
+                                <span>{submitStatus.message}</span>
+                            </div>) : (<form className="w-full space-y-6" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6"><FormInput name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} />
                                     <FormInput name="email" type="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} />
                                 </div>
@@ -127,12 +130,12 @@ const ContactPage = () => {
                                     <FormInput name="phone" type="tel" placeholder="Phone Number (Optional)" value={formData.phone} onChange={handleInputChange} />
                                 </div>
                                 <FormInput name="service" type="select" value={formData.service} onChange={handleInputChange}>
-                                    <option value="" disabled>Select Service</option>
-                                    <option value="digital-marketing">Digital Marketing</option>
-                                    <option value="web-development">Web Development</option>
-                                    <option value="video-production">Video Production</option>
-                                    <option value="brand-strategy">Brand Strategy</option>
-                                    <option value="other">Other Inquiry</option>
+                                    <option value="" disabled className="bg-[#0a0d13] text-gray-400">Select Service</option>
+                                    <option value="digital-marketing" className="bg-[#0a0d13] text-white">Digital Marketing</option>
+                                    <option value="web-development" className="bg-[#0a0d13] text-white">Web Development</option>
+                                    <option value="video-production" className="bg-[#0a0d13] text-white">Video Production</option>
+                                    <option value="brand-strategy" className="bg-[#0a0d13] text-white">Brand Strategy</option>
+                                    <option value="other" className="bg-[#0a0d13] text-white">Other Inquiry</option>
                                 </FormInput>
                                 <FormInput name="message" type="textarea" placeholder="How can we help?" value={formData.message} onChange={handleInputChange} />
                                 <button type="submit" disabled={isSubmitting} className="w-full py-4 rounded-lg text-black font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-300 to-orange-400 hover:scale-[1.02] hover:shadow-lg hover:shadow-yellow-500/20 transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-yellow-400/40 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed group">
